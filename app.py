@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 import storage
 
@@ -9,6 +9,18 @@ app = Flask(__name__)
 def index():
     blog_posts = storage.get_blogposts()
     return render_template("index.html", posts=blog_posts)
+
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    if request.method == "POST":
+        author = request.form.get("author")
+        title = request.form.get("title")
+        content = request.form.get("content")
+        storage.add_blogpost(author, title, content)
+        return redirect(url_for("index"))
+    
+    return render_template("add.html")
 
 
 if __name__ == "__main__":

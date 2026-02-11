@@ -48,3 +48,16 @@ def save_blogposts(blogposts):
     """
     with open("data/data.json", "w") as file:
         json.dump(blogposts, file, indent=4)
+
+
+def add_blogpost(author, title, content):
+    """
+    Adds a movie to the movies database.
+    Loads the information from the JSON file, add the movie,
+    and saves it. The function doesn't need to validate the input.
+    """
+    blogposts = get_blogposts()
+    newest_id = blogposts[-1]['id']
+    id = newest_id + 1
+    blogposts.append({'id': id, 'author': author, 'title': title, 'content': content})
+    save_blogposts(blogposts)
