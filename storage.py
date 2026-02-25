@@ -57,7 +57,15 @@ def add_blogpost(author, title, content):
     and saves it. The function doesn't need to validate the input.
     """
     blogposts = get_blogposts()
-    newest_id = blogposts[-1]['id']
+    newest_id = blogposts[-1]["id"]
     id = newest_id + 1
-    blogposts.append({'id': id, 'author': author, 'title': title, 'content': content})
+    blogposts.append({"id": id, "author": author, "title": title, "content": content})
+    save_blogposts(blogposts)
+
+def delete_blogpost(post_id):
+    blogposts = get_blogposts()
+    for index, post in enumerate(blogposts):
+        if post["id"] == post_id:
+            blogposts.pop(index)
+            break
     save_blogposts(blogposts)
