@@ -62,10 +62,28 @@ def add_blogpost(author, title, content):
     blogposts.append({"id": id, "author": author, "title": title, "content": content})
     save_blogposts(blogposts)
 
-def delete_blogpost(post_id):
+
+def fetch_post_by_id(post_id):
     blogposts = get_blogposts()
     for index, post in enumerate(blogposts):
         if post["id"] == post_id:
-            blogposts.pop(index)
+            return post
+
+
+def delete_blogpost(post_id):
+    blogposts = get_blogposts()
+    post = fetch_post_by_id(post_id)
+    if post in blogposts:
+        blogposts.remove(post)
+    save_blogposts(blogposts)
+
+
+def update_blogpost(post_id, author, title, content):
+    blogposts = get_blogposts()
+    for post in blogposts:
+        if post["id"] == post_id:
+            post["author"] = author
+            post["title"] = title
+            post["content"] = content
             break
     save_blogposts(blogposts)
